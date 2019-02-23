@@ -19,9 +19,6 @@
 
 build() {
 
-#    add_file /usr/lib/libnss_files.so.2 
-#    add_file /usr/lib/libnsl.so.1
-
 # remove optional entries form /etc/{group,passwd,shadow}
 local core="^root:.*|^systemd-.*"
 local udev="^tty:.*|^uucp:.*|^kmem:.|^input:.*|^video:.*|^audio:.*|^lp:.*|^disk:.*|^optical:.*|^storage:.*|^dbus:.*"
@@ -36,6 +33,16 @@ done
 local mod
 for mod in bluetooth bnep hidp btusb rfcomm; do
     add_module "$mod"
+done
+
+
+# libns and libnss
+for libnssfile in /usr/lib/libnss_files*; do
+    add_file "$libnssfile"
+done
+
+for libnslfile in /usr/lib/libnsl*; do
+    add_file "$libnslfile"
 done
 
 
