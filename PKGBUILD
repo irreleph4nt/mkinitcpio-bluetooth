@@ -1,6 +1,6 @@
 # Author: Robert Maerz
 pkgname=mkinitcpio-bluetooth
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="This is a initcpio hook for bluetooth connectivity during boot / in initramfs."
 url="https://github.com/irreleph4nt/mkinitcpio-bluetooth/"
@@ -12,7 +12,7 @@ conflicts=(mkinitcpio-btinput)
 replaces=(mkinitcpio-btinput)
 install=mkinitcpio-bluetooth.install
 source=(bluetooth_install bluetooth_hook org.bluez.conf)
-md5sums=('55d2b9451b1018f5d7661a795d56084e'
+md5sums=('7ad85adf91d7acd8b4ec556dbde1b35a'
          'e507be5e21ec99c7bc0e35dee9d68f5b'
          '5c171037726256d674bcc2d05fdbab86'
 )

@@ -94,7 +94,7 @@ add_binary /usr/bin/bluetoothctl
 
 # bluetooth:
 add_file /usr/share/dbus-1/system-services/org.bluez.service
-add_file /usr/lib/initcpio/bluetooth/org.bluez.conf
+add_file /usr/lib/initcpio/bluetooth/org.bluez.conf /etc/dbus-1/system.d/org.bluez.conf
 
 add_dir /run/sdp/
 add_dir /var/
