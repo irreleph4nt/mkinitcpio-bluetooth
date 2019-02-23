@@ -1,0 +1,113 @@
+#!/bin/bash
+#
+# This file is part of mkinitcpio-bluetooth.  mkinitcpio-bluetooth
+# is free software: you can redistribute it and/or modify it under the terms 
+# of the GNU General Public License as published by the Free Software Foundation, 
+# version 2.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 51
+# Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# Based on mkinitcpio-bluetooth-input by Aline Freitas <aline@alinefreitas.com.br>
+# Copyright Robert Maerz
+
+build() {
+
+#    add_file /usr/lib/libnss_files.so.2 
+#    add_file /usr/lib/libnsl.so.1
+
+# remove optional entries form /etc/{group,passwd,shadow}
+local core="^root:.*|^systemd-.*"
+local udev="^tty:.*|^uucp:.*|^kmem:.|^input:.*|^video:.*|^audio:.*|^lp:.*|^disk:.*|^optical:.*|^storage:.*|^dbus:.*"
+local target
+for target in /etc/{group,passwd,shadow} ; do
+	add_file "$target"
+	sed -i -r -e "/${core}|${udev}/!d" $BUILDROOT/"$target"
+done
+
+
+# modules:
+local mod
+for mod in bluetooth bnep hidp btusb rfcomm; do
+    add_module "$mod"
+done
+
+
+# dbus:
+
+add_dir /etc/dbus-1/
+add_dir /etc/dbus-1/system.d/
+add_dir /usr/bin/
+add_dir /usr/lib/
+add_dir /usr/lib/dbus-1.0/
+add_dir /usr/lib/sysusers.d/
+add_dir /usr/lib/tmpfiles.d/
+add_dir /usr/share/dbus-1/
+add_dir /usr/share/dbus-1/services/
+add_dir /usr/share/dbus-1/session.d/
+add_dir /usr/share/dbus-1/system-services/
+add_dir /usr/share/dbus-1/system.d/
+add_dir /var/lib/dbus/
+
+add_file /etc/dbus-1/session.conf
+add_file /etc/dbus-1/system.conf
+add_binary /usr/bin/dbus-daemon
+
+for dbusfile in /usr/lib/libdbus-1.s*; do
+    add_file "$dbusfile"
+done
+
+add_file /usr/lib/sysusers.d/dbus.conf
+add_file /usr/lib/tmpfiles.d/dbus.conf
+add_file /usr/share/dbus-1/session.conf
+add_file /usr/share/dbus-1/system.conf
+add_symlink /var/lib/dbus/machine-id /etc/machine-id
+
+
+# bluez:
+add_dir /etc/bluetooth/
+add_dir /usr/lib/bluetooth/
+add_dir /usr/lib/modprobe.d/
+add_dir /usr/lib/modules-load.d/
+add_dir /sys/class/bluetooth/
+
+for hcifile in /sys/class/bluetooth/*; do
+    add_symlink "$hcifile"
+done
+
+add_file /etc/bluetooth/main.conf
+add_binary /usr/lib/bluetooth/bluetoothd
+add_file /usr/lib/modprobe.d/bluetooth-usb.conf
+add_file /usr/lib/modules-load.d/bluez.conf
+add_file /usr/share/dbus-1/system.d/bluetooth.conf
+
+# bluez-utils:
+add_full_dir /var/lib/bluetooth
+add_binary /usr/bin/bluetoothctl
+
+
+# bluetooth:
+add_file /usr/share/dbus-1/system-services/org.bluez.service
+add_file /usr/lib/initcpio/bluetooth/org.bluez.conf
+
+add_dir /run/sdp/
+add_dir /var/
+add_symlink /var/run /run
+
+add_runscript
+
+}
+
+help() {
+  cat <<HELPEOF
+This hook installs the necessary daemons for bluetooth (USB Dongle) support in initcpio.
+HELPEOF
+}
+
+# vim: set ft=sh ts=4 sw=4 et:
