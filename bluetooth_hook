@@ -17,20 +17,20 @@
 # Based on mkinitcpio-bluetooth-input by Aline Freitas <aline@alinefreitas.com.br>
 # Copyright Robert Maerz
 
-run_earlyhook() {
-    msg ":: Activating dbus..."
-    /bin/sh -c "mkdir /run/dbus/"
-    /bin/sh -c "/usr/bin/dbus-daemon --system --syslog-only"
+run_earlyhook()	{
+	msg ":: Activating dbus..."
+	/bin/sh -c "mkdir /run/dbus/"
+	/bin/sh -c "/usr/bin/dbus-daemon --system --syslog-only"
 }
 
-run_hook() {
+run_hook()	{
 	msg ":: Activating bluetoothd..."
 	/bin/sh -c "/usr/lib/bluetooth/bluetoothd &"
 }
 
 run_cleanuphook() {
-    msg ":: Deactivating bluetoothd..."
+	msg ":: Deactivating bluetoothd..."
 	killall bluetoothd
-    msg ":: Deactivating dbus..."
-    killall dbus-daemon
+	msg ":: Deactivating dbus..."
+	killall dbus-daemon
 }
