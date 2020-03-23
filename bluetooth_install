@@ -62,8 +62,8 @@ add_dir	/usr/share/dbus-1/system-services/
 add_dir	/usr/share/dbus-1/system.d/
 add_dir	/var/lib/dbus/
 
-add_file	/etc/dbus-1/session.conf
-add_file	/etc/dbus-1/system.conf
+add_file	/usr/share/dbus-1/session.conf
+add_file	/usr/share/dbus-1/system.conf
 add_binary	/usr/bin/dbus-daemon
 
 for dbusfile in /usr/lib/libdbus-1.s*; do
