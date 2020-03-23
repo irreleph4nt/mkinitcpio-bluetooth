@@ -2,13 +2,19 @@
 mkinitcpio hook to enable bluetooth connectivity during boot.
 
 # Instructions
-This hook has been set up to be used with mkinitcpio and has been tested solely on an Arch Linux x86_64 installation.
+This hook has been set up to be used with mkinitcpio and has been tested solely on an Arch Linux x86_64 installation that uses refind-efi **instead of GRUB**.
 
 ## Prerquisites
  - The hook does not work together with the `systemd` hook in `/etc/mkinitcpio.conf`
  - For this hook to operate, the following packages are required: `dbus, bluez, bluez-utils`
  - It relies on the `AutoEnable=true` setting in `/etc/bluetooth/main.conf`
- - Please be aware that running this hook will increase your initramfs and fallback images in size, so be prepared for that
+ 
+### Boot process & a note for Manjaro users
+Please be aware that just like any other additional module, the hook adds to your kernel image. To operate, it hence requires your kernel to be available during boot, **before** you are asked for a passphrase.
+A supported setup therefore strictly requires your /boot partition to **not** be encrypted.
+
+If you are a **Manjaro** user and installed your system using their setup assistant, there is a high likelyhood of your /boot partition also being encrypted. In that case this hook won't work for you as you are prompted by GRUB early on, *before* your kernel and hence this module is available. Please refer to [this](https://forum.manjaro.org/t/full-system-encryption-without-encrypted-boot/113445) Manjaro post for options to make your boot process support this hook.
+
 
 ## Preparations
  1. If you haven't already, make sure you have paired, connected and trusted your bluetooth keyboard. Instructions can be found on the ArchWiki [here](https://wiki.archlinux.org/index.php/bluetooth#Pairing).
