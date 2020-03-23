@@ -26,5 +26,6 @@ If you are a **Manjaro** user and installed your system using their setup assist
  1. Download or clone this repository to your machine and change into it
  2. Run `makepkg` to install this hook
  4. Add `bluetooth` to your HOOKS array in `/etc/mkinitcpio.conf` before `encrypt` and after `keyboard`
+    **Example:** HOOKS="base udev autodetect modconf keyboard keymap bluetooth block encrypt lvm2 filesystems fsck"
  5. Rebuild your initramfs with `mkinitcpio`
  6. Upon next reboot, your keyboard should become operational automatically just before cryptsetup asks for your passphrase
