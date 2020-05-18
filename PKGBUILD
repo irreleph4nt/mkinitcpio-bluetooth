@@ -8,7 +8,7 @@ arch=('x86_64' 'i686')
 license=('GPLv2')
 depends=('bluez' 'bluez-utils' 'dbus')
 source=('bluetooth_install' 'bluetooth_hook' 'org.bluez.conf')
-md5sums=('034a7d347cb51e5cb3fcbd41d0add27e'
+md5sums=('bf5baafb0514046da7ae7411010ea31b'
 	'b5e9f304ad0e1b6ac56d7a22d22f0b3a'
 	'5c171037726256d674bcc2d05fdbab86'
 )
