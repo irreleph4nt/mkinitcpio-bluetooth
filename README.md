@@ -22,10 +22,28 @@ If you are a **Manjaro** user and installed your system using their setup assist
  3. Check that `AutoEnable` is enabled in `/etc/bluetooth/main.conf`
 
 ## Setup
-
  1. Download or clone this repository to your machine and change into it
  2. Run `makepkg` to install this hook
- 4. Add `bluetooth` to your HOOKS array in `/etc/mkinitcpio.conf` before `encrypt` and after `keyboard`
-    **Example:** HOOKS="base udev autodetect modconf keyboard keymap bluetooth block encrypt lvm2 filesystems fsck"
+ 3. Add `bluetooth` to your HOOKS array in `/etc/mkinitcpio.conf` before `encrypt` and after `keyboard`
+ 
+    **Example:** `HOOKS=(base udev autodetect modconf keyboard keymap bluetooth block encrypt lvm2 filesystems fsck)`
+ 4. **(if needed)** Add any file, binary, module that your keyboard or bt adapter might need
+ 
+    **Exemple:** 
+    ```
+    FILES=(/usr/lib/firmware/intel/ibt-20-1-3.sfi) 
+    MODULES=(usbhid xhci_hcd)
+    ```
  5. Rebuild your initramfs with `mkinitcpio`
  6. Upon next reboot, your keyboard should become operational automatically just before cryptsetup asks for your passphrase
+
+## Troubleshooting
+If you have trouble finding what module, file, binary you need for your keyboard or bt adapter, try looking for errors in dmesg and journalctl related to bluetooth.
+
+**Exemple:**
+```
+# journactl | grep bluetooth
+kernel: bluetooth hci0: Direct firmware load for intel/ibt-20-1-3.sfi failed with error -2
+# dmesg | grep bluetooth
+[    1.717123] bluetooth hci0: Direct firmware load for intel/ibt-20-1-3.sfi failed with error -2
+```
