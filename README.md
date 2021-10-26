@@ -29,7 +29,7 @@ If you are a **Manjaro** user and installed your system using their setup assist
     **Example:** `HOOKS=(base udev autodetect modconf keyboard keymap bluetooth block encrypt lvm2 filesystems fsck)`
  4. **(if needed)** Add any file, binary, module that your keyboard or bt adapter might need
  
-    **Exemple:** 
+    **Example:** 
     ```
     FILES=(/usr/lib/firmware/intel/ibt-20-1-3.sfi) 
     MODULES=(usbhid xhci_hcd)
@@ -40,7 +40,7 @@ If you are a **Manjaro** user and installed your system using their setup assist
 ## Troubleshooting
 If you have trouble finding what module, file, binary you need for your keyboard or bt adapter, try looking for errors in dmesg and journalctl related to bluetooth.
 
-**Exemple:**
+**Example:**
 ```
 # journactl | grep bluetooth
 kernel: bluetooth hci0: Direct firmware load for intel/ibt-20-1-3.sfi failed with error -2
